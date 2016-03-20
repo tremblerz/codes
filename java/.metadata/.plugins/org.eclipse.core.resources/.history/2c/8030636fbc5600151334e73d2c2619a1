@@ -1,0 +1,24 @@
+class newThread implements Runnable{
+	public void run(){
+		for(int i=0;i<10;i++){
+			System.out.println(i);
+		}
+	}
+	public void start(){
+		System.out.println("thread started");
+	}
+}
+public class runnableExample {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+			newThread t1=new newThread();
+			newThread t2=new newThread();
+			t1.start();
+			t2.start();
+	}
+
+}

@@ -1,0 +1,13 @@
+import java.util.Scanner;
+
+
+public class Schedule{
+	public static void main(String[] args) {
+		runner1 r1=new runner1();
+		r1.setvalues();
+		sjf ex1 = new sjf();
+		Fcfs ex2 = new Fcfs();
+		ex1.averageWaitingTimeCalc();
+		ex2.averageWaitingTimeCalc();
+	}
+}

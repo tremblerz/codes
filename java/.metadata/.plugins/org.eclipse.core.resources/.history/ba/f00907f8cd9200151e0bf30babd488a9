@@ -1,0 +1,6 @@
+
+public class fcfs {
+	fcfs(int head,int total,int[] position){
+		
+	}
+}

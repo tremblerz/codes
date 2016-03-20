@@ -1,0 +1,6 @@
+
+public class sstf {
+	sstf(int head,int total,int[] position){
+		
+	}
+}

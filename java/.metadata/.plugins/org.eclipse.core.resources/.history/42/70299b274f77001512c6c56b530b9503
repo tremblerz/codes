@@ -1,0 +1,104 @@
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import java.awt.BorderLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
+import javax.swing.JSplitPane;
+import javax.swing.JToolBar;
+import javax.swing.BoxLayout;
+import javax.swing.JProgressBar;
+import javax.swing.JList;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.UIManager;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
+
+import javax.swing.JTextField;
+import javax.swing.JSeparator;
+import javax.swing.JToggleButton;
+import javax.swing.border.Border;
+
+import com.sun.java.swing.plaf.motif.MotifBorders.ToggleButtonBorder;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+
+
+
+public class runner {
+	private JFrame ApplicationFrame,frame;
+	private JButton processSimulation;
+	private JCheckBox Cfcfs,Csjfn,Csjfp,Cround;
+	private JToggleButton start;
+	private JTextField numberOfProcess,burstTimeRange;
+	private JProgressBar fcfs,sjfn,sjfp,round;
+	private boolean running;
+	private static runner window;
+	private JLabel welcome;
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					window = new runner();
+					window.frame.setVisible(true);
+					System.out.println(1);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	public runner() {
+		initialize(0);
+		running=false;
+	}
+	private void initialize(int i) {
+		/**
+		 * @wbp.parser.entryPoint
+		 */
+		if(i==0){
+			frame = new JFrame();
+			//frame.setBounds(0, 0, 1285, 700);
+			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setTitle("Welcome to OS Simulator !");
+			frame.getContentPane().setLayout(null);
+			
+			processSimulation = new JButton();
+			processSimulation.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					frame.setVisible(false);
+					initialize(1);
+				}
+			});
+			processSimulation.setBounds(500, 220, 180, 140);
+			frame.getContentPane().add(processSimulation);
+
+			welcome = new JLabel("Visualize your Operating System");
+			welcome.setFont(new Font("Arial", Font.ITALIC, 34));
+			welcome.setBounds(400,10,520,70);
+			frame.getContentPane().add(welcome);
+		}
+		else{
+			window.frame.setVisible(true);
+			frame = new JFrame();
+			//frame.setBounds(0,0,1285,700);
+			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setTitle("Enjoy the Process Simulator !");
+			frame.getContentPane().setLayout(null);
+			welcome.setText("See the Processor running here live");
+			window.frame.setVisible(true);
+			//welcome.setBounds(350,10,560,70);
+			frame.getContentPane().add(welcome);
+		}
+	}
+}

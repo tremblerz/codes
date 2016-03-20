@@ -1,0 +1,7 @@
+
+public class scan {
+	private int head,total,position[],ans[];
+	scan(int head,int total,int[] position){
+		
+	}
+}

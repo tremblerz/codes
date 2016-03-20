@@ -1,0 +1,15 @@
+import java.util.Scanner;
+
+
+public class Schedule{
+	public static void main(String[] args) {
+		runner1 r1=new runner1();
+		r1.setvalues();
+		sjf ex1 = new sjf();
+		Fcfs ex2 = new Fcfs();
+		ex1.averageWaitingTimeCalc();
+		ex2.averageWaitingTimeCalc();
+		System.out.println("Total Waiting Time for SJF Non-Preemptive is " + ex1.printWaitingTime());
+		System.out.println("Total Waiting Time for FCFS is "+ ex2.printWaitingTime());
+	}
+}

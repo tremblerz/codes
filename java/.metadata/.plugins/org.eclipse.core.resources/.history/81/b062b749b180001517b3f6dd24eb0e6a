@@ -1,0 +1,285 @@
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import java.awt.BorderLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
+import javax.swing.JSplitPane;
+import javax.swing.JToolBar;
+import javax.swing.BoxLayout;
+import javax.swing.JProgressBar;
+import javax.swing.JList;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.UIManager;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
+
+import javax.swing.JTextField;
+import javax.swing.JSeparator;
+import javax.swing.JToggleButton;
+import javax.swing.border.Border;
+
+import com.sun.java.swing.plaf.motif.MotifBorders.ToggleButtonBorder;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+
+
+
+public class runner {
+	private JFrame frame;
+	private JButton processSimulation,start;
+	private JCheckBox Cfcfs,Csjfn,Csjfp,Cround;
+	private JTextField numberOfProcess,burstTimeRange;
+	private JProgressBar fcfs,sjfn,sjfp,round;
+	private boolean running;
+	private static runner window;
+	private JLabel welcome,npro,range;
+	private boolean show[];
+	private Thread fThread,spThread,snThread,rThread;
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					window = new runner();
+					window.frame.setVisible(true);
+		//			System.out.println(1);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	public runner() {
+		show = new boolean[4];
+		
+		running = false;
+		
+		frame = new JFrame();
+		
+		welcome = new JLabel();
+		
+		processSimulation = new JButton();
+
+		npro = new JLabel();
+		numberOfProcess = new JTextField();
+
+		range = new JLabel();
+		burstTimeRange = new JTextField();
+
+		Cfcfs = new JCheckBox();
+		Csjfn = new JCheckBox();
+		Csjfp = new JCheckBox();
+		Cround = new JCheckBox();
+		
+		start = new JButton();
+		initialize(0);
+
+	}
+	private void initialize(int i) {
+		/**
+		 * @wbp.parser.entryPoint
+		 */
+		if(i==1){
+		//	frame = new JFrame();
+			frame.setBounds(0, 0, 1285, 700);
+			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setTitle("Welcome to OS Simulator !");
+			frame.getContentPane().setLayout(null);
+			
+			processSimulation.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					//frame.getContentPane().remove(processSimulation);
+					processSimulation.setVisible(false);
+					initialize(1);
+				}
+			});
+			processSimulation.setBounds(550, 220, 140, 140);
+			frame.getContentPane().add(processSimulation);
+
+			welcome.setText("Enjoy the Simulator");
+			welcome.setFont(new Font("Arial", Font.ITALIC, 34));
+			welcome.setBounds(400,10,520,70);
+			frame.getContentPane().add(welcome);
+		}
+		else{
+		//	frame.dispose();
+		//	window.frame.setVisible(false);
+			//frame=new JFrame();
+		//	window.frame.setVisible(true);
+		//	welcome.setVisible(false);
+		//	processSimulation.setVisible(false);
+					
+		//	window.frame.setVisible(true);
+		//	frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setTitle("Enjoy the Process Simulator !");
+		//	frame.getContentPane().setLayout(null);
+			
+			welcome.setText("See the Processor running live ~##");
+			welcome.setBounds(300,10,600,70);
+			frame.getContentPane().add(welcome);
+			
+			
+
+		/*	Cfcfs.setVisible(true);
+			Csjfn.setVisible(true);
+			Csjfp.setVisible(true);
+			Cround.setVisible(true);
+			npro.setVisible(true);
+			numberOfProcess.setVisible(true);
+			range.setVisible(true);
+			burstTimeRange.setVisible(true);*/
+			
+			npro.setBounds(70,100,400,20);
+			frame.getContentPane().add(npro);
+			
+			numberOfProcess.setBounds(500,100,100,20);
+			frame.getContentPane().add(numberOfProcess);
+			
+			range.setBounds(70,150,400,20);
+			frame.getContentPane().add(range);
+			
+			burstTimeRange.setBounds(500,150,100,20);
+			frame.getContentPane().add(burstTimeRange);
+			
+			
+			Cfcfs.setText("Check for FCFS");
+			Cfcfs.setBounds(70, 250, 136, 20);
+			frame.getContentPane().add(Cfcfs);
+			Cfcfs.setVisible(true);
+			
+			Csjfn.setText("Check for SJF Non-Preemptive");
+			Csjfn.setBounds(350, 250, 250, 20);
+			frame.getContentPane().add(Csjfn);
+			Csjfn.setVisible(true);
+			
+			Csjfp.setText("Check for SJF Preemptive");
+			Csjfp.setBounds(689,250,200,20);
+			frame.getContentPane().add(Csjfp);
+			Csjfp.setVisible(true);
+			
+			Cround.setText("Check for Round-Robin");
+			Cround.setBounds(1000, 250, 194, 20);
+			frame.getContentPane().add(Cround);
+			Cround.setVisible(true);
+			
+			
+			start.setBounds(500,310,200,50);
+			start.setText("Start Simulation");
+			frame.getContentPane().add(start);
+			start.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(running==false){
+						if (Cfcfs.isSelected())
+							show[0]=true;
+						if (Csjfn.isSelected())
+							show[1]=true;
+						if (Csjfp.isSelected())
+							show[2]=true;
+						if (Cround.isSelected())
+							show[3]=true;
+						validate();
+				//		System.out.print(running);
+					}
+					else{
+						initialize(1);
+						if(show[0]){
+							fThread.stop();
+							show[0]=false;
+							fcfs.setVisible(false);
+						}
+						if(show[1]){
+							snThread.stop();
+							show[1]=false;
+						}
+						if(show[2]){
+							spThread.stop();
+							show[2]=false;
+						}
+						if(show[3]){
+							rThread.stop();
+							show[3]=false;
+						}
+						running=false;
+						start.setText("Start simulation");
+						Cfcfs.setVisible(true);
+						Csjfn.setVisible(true);
+						Csjfp.setVisible(true);
+						Cround.setVisible(true);
+						npro.setVisible(true);
+						numberOfProcess.setVisible(true);
+						range.setVisible(true);
+						burstTimeRange.setVisible(true);
+					}
+				}
+			});
+		}
+	}
+	public void validate(){
+		int number=0,burstRange=0;
+		boolean flag;
+		try{
+	        number=Integer.parseInt(numberOfProcess.getText());
+	        burstRange=Integer.parseInt(burstTimeRange.getText());
+	        flag=true;
+	    }catch(NumberFormatException e1){
+	    	flag=false;
+	    }
+		if(flag == true){
+			if(number>=1&&number<=1000 && burstRange>=1&&burstRange<=1000){
+				if(show[0]||show[1]||show[2]||show[3])
+					simulate(number,burstRange);
+				else
+					JOptionPane.showMessageDialog(frame, "Select atleast one Algorithm");
+			}
+			else
+				JOptionPane.showMessageDialog(frame, "Number of process should be in range of 1-1000");
+		}
+		else{
+			JOptionPane.showMessageDialog(frame, "Please give an integer input");
+		}
+	}
+	public void simulate(int nOfProcess,int brange){
+		running=true;
+		start.setText("Stop simulation");
+		Cfcfs.setVisible(false);
+		Csjfn.setVisible(false);
+		Csjfp.setVisible(false);
+		Cround.setVisible(false);
+		npro.setVisible(false);
+		numberOfProcess.setVisible(false);
+		range.setVisible(false);
+		burstTimeRange.setVisible(false);
+		RandomInputGeneration r = new RandomInputGeneration(nOfProcess,brange);
+		r.randomGeneration();
+		if(show[0]){
+			fcfs = new JProgressBar();
+			fThread = new fcfs(frame,r,fcfs);
+			fThread.start();
+		}
+		if(show[2]){
+			sjfp = new JProgressBar();
+			spThread = new sjfp(frame,r,sjfp);
+			spThread.start();
+		}
+		if(show[1]){
+			sjfn = new JProgressBar();
+			snThread = new Sjf(frame,r,sjfn);
+			snThread.start();
+		}
+		if(show[3]){
+			round = new JProgressBar();
+			rThread = new roundRobin(frame,r,round);
+			rThread.start();
+		}
+	}
+}

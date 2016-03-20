@@ -1,0 +1,50 @@
+public class sjfp {
+        public int[] waitingTime,burstTime,arrivalTime;
+        public int numOfProcess;
+        public double averageWaitingTime;
+        public sjfp(runner1 r)
+        {
+        		numOfProcess = r.numOfProcess;
+                waitingTime=new int[numOfProcess];
+                burstTime=new int[numOfProcess];
+                arrivalTime=new int[numOfProcess];
+                for(int i=0;i<numOfProcess;i++)
+                	burstTime[i]=r.burstTime[i];
+                for(int i=0;i<numOfProcess;i++)
+                	arrivalTime[i]=r.arrivalTime[i];
+               // System.out.println(r.numOfProcess);
+        }
+        public void averageWaitingTimeCalc()
+        {
+        	int min=10000,sum=0,i;
+        	for(i=0;i<numOfProcess;i++)
+        		sum+=burstTime[i];
+        	while(sum!=0){
+        		for(i=0;i<numOfProcess;i++){
+        			if(arrivalTime[i]<=i){
+        				if(min>burstTime[i]&&burstTime[i]>0){
+        					min=burstTime[i];
+        				}
+        			}
+        		}
+        		burstTime[i]--;
+        		sum--;
+        		for(int j=0;j<numOfProcess;j++){
+        			if(j!=i){
+        				if(arrivalTime[j]<=j)
+        					waitingTime[j]++;
+        			}
+        		}
+        	}
+        }
+        public double printWaitingTime()
+        {
+                //Print Waiting Time
+                //System.out.println("Print the Waiting Time");
+                int s=0;
+                for(int i=0;i<numOfProcess;i++)
+                        s+=waitingTime[i];
+                averageWaitingTime=(double)s/(double)numOfProcess;
+                return averageWaitingTime;
+        }
+}

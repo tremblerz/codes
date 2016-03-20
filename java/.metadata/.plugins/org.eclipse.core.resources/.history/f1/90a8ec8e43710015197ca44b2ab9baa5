@@ -1,0 +1,111 @@
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JProgressBar;
+import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
+
+public class test2 {
+  static class BarThread extends Thread {
+    private static int DELAY = 200;
+
+    JProgressBar progressBar;
+    Border border;
+    RandomInputGeneration r = new RandomInputGeneration();
+    int completed;
+    
+    public BarThread(JProgressBar bar) {
+      progressBar = bar;
+    }
+
+    public void run() {
+      //int minimum = progressBar.getMinimum();
+      //int maximum = progressBar.getMaximum();
+      Runnable runner = new Runnable() {
+        public void run() {
+          int value = progressBar.getValue();
+          progressBar.setValue(value + 1);
+        }
+      };
+      /*for (int i = minimum; i < maximum; i++) {
+        try {
+          SwingUtilities.invokeAndWait(runner);
+          // our job for each step is to just sleep
+          Thread.sleep(DELAY);
+        } catch (InterruptedException ignoredException) {
+        } catch (InvocationTargetException ignoredException) {
+        }
+      }*/
+      int n=10;
+      for(int i=0;i<n;i++){
+  		border = BorderFactory.createTitledBorder("Executing Process Number " + String.valueOf(i+1));
+      	progressBar.setBorder(border);
+      	
+  		System.out.println("Working Fine 4");
+      	int total = r.burstTime[i];
+      	while(r.burstTime[i]>0){
+      		System.out.println(String.valueOf(r.burstTime[i]));
+      		completed = ((total-r.burstTime[i])/total)*100;
+      		//int x=1000000;
+      		//for(int k=0;k<1000000;k++)
+      			//for(int j=0;j<1000000;j++)
+      				//for(int l=0;l<10;l++)
+      	   // 			progressBar.setValue(completed);
+      		//try {
+      		//    Thread.sleep(100);                 //1000 milliseconds is one second.
+      		//} catch(InterruptedException ex) {
+      		//    Thread.currentThread().interrupt();
+      		//}
+      		r.burstTime[i]--;
+      		try {
+                SwingUtilities.invokeAndWait(runner);
+                // our job for each step is to just sleep
+                Thread.sleep(DELAY);
+              } catch (InterruptedException ignoredException) {
+              	} catch (InvocationTargetException ignoredException) {
+              	  }
+      		//System.out.println(r.burstTime[i]);
+      	}
+  		}
+    }
+  }
+
+  public static void main(String args[]) {
+    // Initialize
+    final JProgressBar aJProgressBar = new JProgressBar(0, 50);
+    aJProgressBar.setStringPainted(true);
+
+    final JButton aJButton = new JButton("Start");
+
+    ActionListener actionListener = new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        aJButton.setEnabled(false);
+        Thread stepper = new BarThread(aJProgressBar);
+        stepper.start();
+      }
+    };
+
+    aJButton.addActionListener(actionListener);
+
+    int n=10;
+    RandomInputGeneration r = new RandomInputGeneration(n);
+	r.randomGeneration();
+	
+    String title = (args.length == 0 ? "Stepping Progress" : args[0]);
+    JFrame theFrame = new JFrame(title);
+    theFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    
+    Container contentPane = theFrame.getContentPane();
+    contentPane.add(aJProgressBar, BorderLayout.NORTH);
+    contentPane.add(aJButton, BorderLayout.SOUTH);
+    theFrame.setSize(300, 200);
+    theFrame.setVisible(true);
+  }
+}

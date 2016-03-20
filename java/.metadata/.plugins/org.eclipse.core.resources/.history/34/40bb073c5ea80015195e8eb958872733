@@ -1,0 +1,179 @@
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+
+
+public class main {
+
+	private JFrame frame;
+	private JTextField txtEnterNumberOf;
+	private JRadioButton rdbtnFcfs,rdbtnNewRadioButton,rdbtnSjf,rdbtnSjfNonpreemptive;
+	private float timeFCFS,timeRR,timeSJF,timeSJFP;
+	private RandomInputGeneration r;
+	private JLabel lblAverageWaitingTime,lblAverageWaitingTime_1,lblAverageWaitingTime_2,lblAverageWaitingTime_3;
+	private JLabel out,out1,out2,out3;
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					main window = new main();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public main() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(20, 1500, 787, 388);
+		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Welcome to the Simulator");
+		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblNewLabel.setBounds(42, 12, 254, 41);
+		frame.getContentPane().add(lblNewLabel);
+		
+		rdbtnFcfs = new JRadioButton("FCFS");
+		rdbtnFcfs.setBounds(62, 136, 70, 23);
+		frame.getContentPane().add(rdbtnFcfs);
+		rdbtnNewRadioButton = new JRadioButton("Round Robin");
+		rdbtnNewRadioButton.setBounds(170, 136, 126, 23);
+		frame.getContentPane().add(rdbtnNewRadioButton);
+		
+		rdbtnSjf = new JRadioButton("SJF");
+		rdbtnSjf.setBounds(342, 136, 70, 23);
+		frame.getContentPane().add(rdbtnSjf);
+		
+		rdbtnSjfNonpreemptive = new JRadioButton("SJF Non-Preemptive");
+		rdbtnSjfNonpreemptive.setBounds(441, 136, 195, 23);
+		frame.getContentPane().add(rdbtnSjfNonpreemptive);
+		
+		
+		
+		txtEnterNumberOf = new JTextField();
+		txtEnterNumberOf.setText("Enter Number of Process here [ default=25]");
+		txtEnterNumberOf.setBounds(62, 79, 289, 19);
+		frame.getContentPane().add(txtEnterNumberOf);
+		txtEnterNumberOf.setColumns(10);
+		
+		lblAverageWaitingTime = new JLabel("Average waiting Time for FCFS is :");
+		lblAverageWaitingTime.setBounds(62, 205, 252, 15);
+		frame.getContentPane().add(lblAverageWaitingTime);
+		
+		out = new JLabel();
+		out.setBounds(325,205,50,15);
+		frame.getContentPane().add(out);
+		out.setVisible(false);
+		
+		
+		lblAverageWaitingTime_1 = new JLabel("Average waiting Time for SJF is :");
+		lblAverageWaitingTime_1.setBounds(62, 308, 234, 15);
+		frame.getContentPane().add(lblAverageWaitingTime_1);
+		
+		out1 = new JLabel();
+		out1.setBounds(325,308,50,15);
+		frame.getContentPane().add(out1);
+		out1.setVisible(false);
+		
+		
+		lblAverageWaitingTime_2 = new JLabel("Average waiting Time for RoundRobin is :");
+		lblAverageWaitingTime_2.setBounds(384, 205, 313, 15);
+		frame.getContentPane().add(lblAverageWaitingTime_2);
+		
+		out2 = new JLabel();
+		out2.setBounds(710,205,50,15);
+		frame.getContentPane().add(out2);
+		out2.setVisible(false);
+		
+		
+		lblAverageWaitingTime_3 = new JLabel("Average waiting Time for SJF Preemptive is :");
+		lblAverageWaitingTime_3.setBounds(384, 308, 313, 15);
+		frame.getContentPane().add(lblAverageWaitingTime_3);
+		
+		out3 = new JLabel();
+		out3.setBounds(710,308,50,15);
+		frame.getContentPane().add(out3);
+		out3.setVisible(false);
+		
+		
+		JButton btnNewButton = new JButton("Simulate");
+		btnNewButton.setBounds(245, 167, 214, 26);
+		frame.getContentPane().add(btnNewButton);
+		btnNewButton.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				boolean flag;
+				int number=0;
+				try{
+			        number=Integer.parseInt(txtEnterNumberOf.getText());
+			        flag=true;
+			    }catch(NumberFormatException e1){
+			    	flag=false;
+			    }
+				if(flag==true)
+					r = new RandomInputGeneration(number);
+				else
+					r = new RandomInputGeneration();
+				r.randomGeneration();
+				// TODO Auto-generated method stub
+				
+				if(rdbtnFcfs.isSelected()){
+					fcfs x = new fcfs(r);
+					x.averageWaitingTimeCalc();
+					timeFCFS = (float) x.printWaitingTime();
+					System.out.println(timeFCFS);
+					out.setVisible(true);
+					out.setText(String.valueOf(timeFCFS));
+				}
+				if(rdbtnNewRadioButton.isSelected()){
+					roundRobin y = new roundRobin(r);
+					y.averageWaitingTimeCalc();
+					timeRR = (float) y.printWaitingTime();
+					System.out.println(timeRR);
+					out1.setVisible(true);
+					out1.setText(String.valueOf(timeRR));
+				}
+				if(rdbtnSjf.isSelected()){
+					Sjf z = new Sjf(r);
+					z.averageWaitingTimeCalc();
+					timeSJF = (float) z.printWaitingTime();
+					System.out.println(timeSJF);
+					out2.setVisible(true);
+					out2.setText(String.valueOf(timeSJF));
+				}
+				if(rdbtnSjfNonpreemptive.isSelected()){
+					sjfp v = new sjfp(r);
+					v.averageWaitingTimeCalc();
+					timeSJFP = (float) v.printWaitingTime();
+					System.out.println(timeSJFP);
+					out3.setVisible(true);
+					out3.setText(String.valueOf(timeSJFP));
+				}
+			}
+		});
+	}
+}

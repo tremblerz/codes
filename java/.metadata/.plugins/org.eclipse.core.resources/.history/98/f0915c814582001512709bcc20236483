@@ -1,0 +1,99 @@
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+
+
+public class main {
+
+	private JFrame frame;
+	private Semaphore mutex,sem[];
+	private char state[];
+	private Thread t[];
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					main window = new main();
+					window.frame.setVisible(true);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	class Semaphore{
+		private int s;
+		public Semaphore() {
+			s=0;
+		}
+		public void waitt(){
+			while(s<0){
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			s--;
+		}
+		public void signal(){
+			s++;
+		}
+	}
+	class philospher extends Thread{
+		private int num;
+		public philospher(int i){
+			num=i;
+		}
+		public void run(){
+			this.getfork(num);
+			this.test(num);
+			this.putfork(num);
+		}
+		public void getfork(int i){ 
+			mutex.waitt();
+			state[i] = 'H'; 
+			test(i);
+			mutex.signal();
+			sem[i].waitt();
+		}
+		public void putfork(int i){
+		    mutex.waitt();
+		    state[i] = 'T'; 
+		    test((i+1)%5);
+		    test((i-1)%5);
+		    mutex.signal();
+		}
+		public void test(int i){
+		    if (state[i] == 'H' && state[(i-1)%5] != 'E' && state[(i+1)%5] != 'E'){ 
+		        state[i] = 'E'; 
+		        sem[i].signal();
+		    }
+		}
+	}
+	public main() {
+		initialize();
+		mutex = new Semaphore();
+		sem = new Semaphore[5];
+		state = new char[5];
+		t1 = new philospher;
+		t2 = new philospher;
+		t3 = new philospher;
+		t4 = new philospher;
+		t5 = new philospher;
+		for(int i=0;i<5;i++){
+			state[i]='T';
+	//		t[i].start();
+		}
+	}
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+	}
+}

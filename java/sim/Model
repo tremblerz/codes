@@ -1,0 +1,25 @@
+Class Runner - 
+	data members-
+		Button - Process Simulation
+		Check Box - Algorithms
+		Button - Start Simulator
+		Check Box - Save to the file
+		Text Field - Number of Process
+		Text Field - Burst Time Range
+		Progress Bar - fcfs,sjfn,sjfp,round
+		Boolean - running
+		Frame - Welcome Frame , Application Frame
+		JLabel - Heading
+
+	methods -
+		1.Constructor - 
+			Initialazing welcome screen
+		2.Main - 
+
+		3.Action Listener for Process Simulation
+
+		4.Action Listener for simulator button -
+			5.Input Validator -
+				6.initialize Process Progress Bar
+			7.Synchronize -
+				8.Simulate

@@ -1,0 +1,37 @@
+import java.util.Scanner;
+
+public class runner {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int head,total,choice;
+		int[] position;
+		Scanner in=new Scanner(System.in);
+		System.out.println("Total no. of files");
+		total = in.nextInt();
+		System.out.println("Enter the position of head");
+		head = in.nextInt();
+		position = new int[total];
+		for(int i=0;i<total;i++){
+			position[i] = in.nextInt();
+		}
+		System.out.println("Enter your Choice");
+		choice = in.nextInt();
+		switch(choice){
+		case 1:fcfs f = new fcfs(head,total,position);
+				break;
+		case 2:sstf st = new sstf(head,total,position);
+				break;
+		case 3:scan sc = new scan(head,total,position);
+				break;
+		case 4:cscan cs = new cscan(head,total,position);
+				break;
+		case  5:clook c = new clook(head,total,position);
+				break;
+		}
+	}
+
+}

@@ -1,0 +1,21 @@
+import java.util.Scanner;
+
+public class runner {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int head,total;
+		int[] position;
+		Scanner in=new Scanner(System.in);
+		total = in.nextInt();
+		head = in.nextInt();
+		position = new int[total];
+		for(int i=0;i<total;i++){
+			position
+		}
+	}
+
+}

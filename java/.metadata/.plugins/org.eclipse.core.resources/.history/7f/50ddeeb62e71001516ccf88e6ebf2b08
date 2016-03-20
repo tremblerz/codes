@@ -1,0 +1,158 @@
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import java.awt.BorderLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.JSplitPane;
+import javax.swing.JToolBar;
+import javax.swing.BoxLayout;
+import javax.swing.JProgressBar;
+import javax.swing.JList;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.UIManager;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
+
+import javax.swing.JTextField;
+import javax.swing.JSeparator;
+import javax.swing.JToggleButton;
+import javax.swing.border.Border;
+
+
+public class myGUI implements ActionListener {
+
+	private JFrame frame;
+	private JTextField textField;
+	private JLabel result,lblWelcomeToOs,numberOf;
+	private JProgressBar progressBar;
+	private JToggleButton tglbtnNewToggleButton;
+	private boolean isRunning;
+	private int noOfProcess;
+	private Border border;
+	
+	static class fcfs extends Thread{
+		private JProgressBar bar;
+		private RandomInputGeneration r;
+		private Border border;
+		private float completed;
+		fcfs(RandomInputGeneration r,JProgressBar b,Border border){
+			this.r=r;
+			this.bar=b;
+			this.border=border;
+		}
+		public void run() {
+		      Runnable runner = new Runnable() {
+		        public void run() {
+		          bar.setValue((int)completed);
+		        }
+		      };
+		      r.randomGeneration();
+		      for(int i=0;i<r.numOfProcess;i++){
+		  		border = BorderFactory.createTitledBorder("Executing Process Number " + String.valueOf(i+1));
+		      	bar.setBorder(border);
+		      	int total = r.burstTime[i];
+		      	while(r.burstTime[i]>0){
+		      		completed = ((float)(total-r.burstTime[i])/(float)total)*100;
+		      		r.burstTime[i]--;
+		      		try {
+		                SwingUtilities.invokeAndWait(runner);
+		                Thread.sleep(200);
+		            } catch (InterruptedException ignoredException) {
+		              } catch (InvocationTargetException ignoredException) {
+		              	}
+		      	}
+		  	  }
+		    }
+	}
+	
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable(){
+			public void run(){
+				try{
+					myGUI window = new myGUI();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	public myGUI() {
+		initialize();
+		isRunning=false;
+	}
+	
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(30, 30, 600, 500);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		progressBar = new JProgressBar();
+		//progressBar.setBackground(Color.GRAY);
+		progressBar.setBounds(64, 298, 410, 55);
+		frame.getContentPane().add(progressBar);
+		Border border = BorderFactory.createTitledBorder("FCFS");
+	    progressBar.setBorder(border);
+		
+		lblWelcomeToOs = new JLabel("Welcome To OS Simulator ");
+		lblWelcomeToOs.setFont(new Font("Arial", Font.ITALIC, 24));
+		lblWelcomeToOs.setForeground(Color.ORANGE);
+		lblWelcomeToOs.setBackground(Color.CYAN);
+		lblWelcomeToOs.setBounds(150, 12, 303, 55);
+		frame.getContentPane().add(lblWelcomeToOs);
+		
+		textField = new JTextField();
+		textField.setBounds(243, 122, 114, 19);
+		frame.getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		numberOf = new JLabel("Enter Number of processes");
+		numberOf.setBounds(12, 122, 197, 15);
+		frame.getContentPane().add(numberOf);
+		
+		result = new JLabel("");
+		result.setBounds(12,122,300,15);
+		frame.getContentPane().add(result);
+		result.setVisible(false);
+		
+		tglbtnNewToggleButton = new JToggleButton("Start");
+		tglbtnNewToggleButton.setBounds(64, 209, 167, 25);
+		frame.getContentPane().add(tglbtnNewToggleButton);
+		tglbtnNewToggleButton.addActionListener(this);
+	}
+	
+	public void actionPerformed(ActionEvent e){
+		if(isRunning){
+			isRunning=false;
+			textField.setVisible(true);
+			numberOf.setVisible(true);
+			result.setVisible(false);
+			tglbtnNewToggleButton.setText("Start");
+		}
+		else{
+			String input = textField.getText();
+			isRunning=true;
+			textField.setVisible(false);
+			numberOf.setVisible(false);
+			result.setVisible(true);
+			noOfProcess=Integer.parseInt(input);
+			result.setText("Number of process entered = " + String.valueOf(noOfProcess));
+			tglbtnNewToggleButton.setText("Stop");
+			RandomInputGeneration r = new RandomInputGeneration(noOfProcess);
+			r.randomGeneration();
+			Thread f = new fcfs(r,progressBar,border);
+			f.start();
+			//startFCFS(noOfProcess);
+		}
+	}
+}

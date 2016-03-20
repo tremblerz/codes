@@ -1,0 +1,6 @@
+
+public class scan {
+	scan(int head,int total,int[] position){
+		
+	}
+}

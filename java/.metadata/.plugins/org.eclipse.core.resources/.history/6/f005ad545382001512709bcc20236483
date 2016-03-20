@@ -1,0 +1,128 @@
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+
+
+public class main {
+
+	private JFrame frame;
+	private Semaphore mutex,sem[];
+	private char state[];
+	private Thread t1,t2,t3,t4,t5;
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					main window = new main();
+					window.frame.setVisible(true);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	class Semaphore{
+		private int s;
+		public Semaphore() {
+			s=0;
+		}
+		public void waitt(){
+			while(s<0){
+				/*try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				System.out.println();*/
+			}
+			s--;
+		}
+		public void signal(){
+			System.out.println(s);
+			s++;
+		}
+	}
+	class philospher extends Thread{
+		private int num;
+		public philospher(int i){
+			num=i;
+		}
+		public void run(){
+			this.getfork(num);
+			this.test(num);
+			this.putfork(num);
+		}
+		public void getfork(int i){ 
+		    System.out.println("GetFork " + i + " called");
+			mutex.waitt();
+		    System.out.println("Fork " + i + " entered in the lock");
+			state[i] = 'H'; 
+			test(i);
+		    System.out.println("Fork " + i + " going out of the lock");
+			mutex.signal();
+			sem[i].waitt();
+		}
+		public void putfork(int i){
+		    mutex.waitt();
+		    state[i] = 'T'; 
+		    System.out.println(((i+1)%5) + "   ,   " + (i-1)%5);
+		    test((i+1)%5);
+		    if(i!=0)
+		    	test((i-1)%5);
+		    else
+		    	test(4%5);
+		    mutex.signal();
+		}
+		public void test(int i){
+		    System.out.println("Test called for " + ((i+1)%5) + "   ,   " + (i-1)%5);
+			
+		    if(i!=0){
+		        System.out.println("GetFork " + state[(i+1)%5]+state[i-1] + " "+i);
+		        if (state[i] == 'H' && state[(i-1)%5] != 'H' && state[(i+1)%5] != 'H'){ 
+		        	state[i] = 'E'; 
+		        	System.out.println(i+ " has eaten");
+		        	sem[i].signal();
+		        }
+		    }
+		    else{
+		    	System.out.println("GetFork " + state[4]+state[1] + " " + i);
+		    	if (state[i] == 'H' && state[4] != 'H' && state[(i+1)%5] != 'H'){ 
+		    		state[i] = 'E'; 
+		    		System.out.println(i+ " has eaten");
+		    		sem[i].signal();
+		    	}
+		    }
+		}
+	}
+	public main() {
+		initialize();
+		mutex = new Semaphore();
+		mutex.waitt();
+		mutex.signal();
+		sem = new Semaphore[5];
+		state = new char[5];
+		t1 = new philospher(0);
+		t2 = new philospher(1);
+		t3 = new philospher(2);
+		t4 = new philospher(3);
+		t5 = new philospher(4);
+		for(int i=0;i<5;i++){
+			state[i]='T';
+		}
+		t1.start();
+		t2.start();
+		t3.start();
+		t4.start();
+		t5.start();
+	}
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+	}
+}

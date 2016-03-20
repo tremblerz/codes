@@ -1,0 +1,96 @@
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import java.awt.Font;
+import javax.swing.JButton;
+
+
+public class main {
+
+	private JFrame frame;
+	private JTextField txtEnterNumberOf;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					main window = new main();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public main() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 740, 388);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Welcome to the Simulator");
+		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblNewLabel.setBounds(42, 12, 254, 41);
+		frame.getContentPane().add(lblNewLabel);
+		
+		JRadioButton rdbtnFcfs = new JRadioButton("FCFS");
+		rdbtnFcfs.setBounds(62, 136, 70, 23);
+		frame.getContentPane().add(rdbtnFcfs);
+		
+		JRadioButton rdbtnNewRadioButton = new JRadioButton("Round Robin");
+		rdbtnNewRadioButton.setBounds(170, 136, 126, 23);
+		frame.getContentPane().add(rdbtnNewRadioButton);
+		
+		JRadioButton rdbtnSjf = new JRadioButton("SJF");
+		rdbtnSjf.setBounds(342, 136, 70, 23);
+		frame.getContentPane().add(rdbtnSjf);
+		
+		JRadioButton rdbtnSjfNonpreemptive = new JRadioButton("SJF Non-Preemptive");
+		rdbtnSjfNonpreemptive.setBounds(441, 136, 195, 23);
+		frame.getContentPane().add(rdbtnSjfNonpreemptive);
+		
+		txtEnterNumberOf = new JTextField();
+		txtEnterNumberOf.setText("Enter Number of Process here [ default=25]");
+		txtEnterNumberOf.setBounds(62, 79, 289, 19);
+		frame.getContentPane().add(txtEnterNumberOf);
+		txtEnterNumberOf.setColumns(10);
+		
+		JLabel lblAverageWaitingTime = new JLabel("Average waiting Time for FCFS is :");
+		lblAverageWaitingTime.setBounds(62, 205, 252, 15);
+		frame.getContentPane().add(lblAverageWaitingTime);
+		
+		JLabel lblAverageWaitingTime_1 = new JLabel("Average waiting Time for SJF is :");
+		lblAverageWaitingTime_1.setBounds(62, 308, 234, 15);
+		frame.getContentPane().add(lblAverageWaitingTime_1);
+		
+		JLabel lblAverageWaitingTime_2 = new JLabel("Average waiting Time for RoundRobin is :");
+		lblAverageWaitingTime_2.setBounds(384, 205, 313, 15);
+		frame.getContentPane().add(lblAverageWaitingTime_2);
+		
+		JLabel lblAverageWaitingTime_3 = new JLabel("Average waiting Time for SJF Preemptive is :");
+		lblAverageWaitingTime_3.setBounds(384, 308, 313, 15);
+		frame.getContentPane().add(lblAverageWaitingTime_3);
+		
+		JButton btnNewButton = new JButton("Simulate");
+		btnNewButton.setBounds(245, 167, 214, 26);
+		frame.getContentPane().add(btnNewButton);
+		btnNewButton.
+	}
+}

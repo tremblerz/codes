@@ -1,0 +1,6 @@
+
+public class clook {
+	clook(int head,int total,int[] position){
+		
+	}
+}

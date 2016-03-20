@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy 4 elements to &apos;osSimulator/src/(default package)&apos;&#x0A;- Original project: &apos;cpuScheduling&apos;&#x0A;- Destination element: &apos;osSimulator/src/(default package)&apos;&#x0A;- Original elements:&#x0A;     fcfs.java&#x0A;     sjfp.java&#x0A;     roundRobin.java&#x0A;     Sjf.java" description="Copy compilation units" destination="=osSimulator/src&lt;" element1="/src&lt;{fcfs.java" element2="/src&lt;{sjfp.java" element3="/src&lt;{roundRobin.java" element4="/src&lt;{Sjf.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1445955698342" units="4" version="1.0"/>
+</session>

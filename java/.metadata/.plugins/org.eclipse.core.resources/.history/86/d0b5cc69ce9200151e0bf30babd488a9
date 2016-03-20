@@ -1,0 +1,7 @@
+
+public class cscan {
+	private int head,total,position[],ans[];
+	cscan(int head,int total,int[] position){
+		
+	}
+}

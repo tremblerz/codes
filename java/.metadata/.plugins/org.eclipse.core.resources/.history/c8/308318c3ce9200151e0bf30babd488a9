@@ -1,0 +1,7 @@
+
+public class clook {
+	private int head,total,position[],ans[];
+	clook(int head,int total,int[] position){
+		
+	}
+}

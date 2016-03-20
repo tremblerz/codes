@@ -1,0 +1,35 @@
+class newThread implements Runnable{
+	Thread t;
+	public void run(){
+		for(int i=0;i<10;i++){
+			System.out.println(i);
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	public void start(){
+		System.out.println("thread started");
+		if(t==null){
+			t=new Thread(this);
+			t.start();
+		}
+	}
+}
+public class runnableExample {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+			newThread t1=new newThread();
+			newThread t2=new newThread();
+			t1.start();
+			t2.start();
+	}
+
+}

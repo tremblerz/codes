@@ -1,0 +1,27 @@
+public class fcfs extends runner1{
+	public int[] waitingTime;
+	public double averageWaitingTime;
+	public fcfs()
+	{
+		waitingTime=new int[numOfProcess];  
+	}
+	public void averageWaitingTimeCalc()
+	{
+		//implement FCFS
+		//System.out.println("Calculating Average Waiting Time");
+		waitingTime[0]=0;
+		for(int i=1;i<numOfProcess;i++){
+			waitingTime[i]=burstTime[i-1]+waitingTime[i-1];
+		}
+	}
+	public double printWaitingTime()
+	{
+		//Print Waiting Time
+		//System.out.println("Print the Waiting Time");
+		int s=0;
+		for(int i=0;i<numOfProcess;i++)
+			s+=waitingTime[i];
+		averageWaitingTime=s/numOfProcess;
+		return averageWaitingTime;
+	}
+}

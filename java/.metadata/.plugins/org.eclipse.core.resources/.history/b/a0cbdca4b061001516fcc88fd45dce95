@@ -1,0 +1,37 @@
+public class Sjf extends runner1{
+        public int[] waitingTime;
+        public double averageWaitingTime;
+        public Sjf()
+        {
+                waitingTime=new int[numOfProcess];
+        }
+        public void averageWaitingTimeCalc()
+        {
+                //implement Sjf
+                //System.out.println("Calculating Average Waiting Time");
+                for(int i=0;i<numOfProcess;i++){
+			for(int j=0;j<numOfProcess-1;j++){
+				if(burstTime[j]>burstTime[j+1]){
+					int temp = burstTime[j];
+					burstTime[j]=burstTime[j+1];
+					burstTime[j+1]=temp;
+				}
+			}
+		}
+		waitingTime[0]=0;
+		for(int i=1;i<numOfProcess;i++){
+			waitingTime[i]+=burstTime[i-1]+waitingTime[i-1];
+		}
+//		averageWaitingTime=averageWaitingTime/n;
+        }
+        public double printWaitingTime()
+        {
+                //Print Waiting Time
+                //System.out.println("Print the Waiting Time");
+                int s=0;
+                for(int i=0;i<numOfProcess;i++)
+                        s+=waitingTime[i];
+                averageWaitingTime=s/numOfProcess;
+                return averageWaitingTime;
+        }
+}

@@ -1,0 +1,82 @@
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import java.awt.BorderLayout;
+import javax.swing.JSplitPane;
+import javax.swing.JToolBar;
+import javax.swing.BoxLayout;
+import javax.swing.JProgressBar;
+import javax.swing.JList;
+import javax.swing.SwingConstants;
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.UIManager;
+import java.awt.Font;
+
+
+public class myGUI {
+
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					myGUI window = new myGUI();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public myGUI() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBackground(UIManager.getColor("Button.light"));
+		frame.setBounds(30, 30, 600, 500);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JButton btnNewButton = new JButton("Simulate");
+		btnNewButton.setBounds(26, 261, 211, 25);
+		frame.getContentPane().add(btnNewButton);
+		
+		JProgressBar progressBar = new JProgressBar();
+		progressBar.setBackground(Color.GRAY);
+		progressBar.setOrientation(SwingConstants.VERTICAL);
+		progressBar.setBounds(26, 314, 31, 174);
+		frame.getContentPane().add(progressBar);
+		
+		JProgressBar progressBar_1 = new JProgressBar();
+		progressBar_1.setOrientation(SwingConstants.VERTICAL);
+		progressBar_1.setBounds(87, 314, 31, 174);
+		frame.getContentPane().add(progressBar_1);
+		
+		JProgressBar progressBar_2 = new JProgressBar();
+		progressBar_2.setOrientation(SwingConstants.VERTICAL);
+		progressBar_2.setBounds(148, 314, 31, 174);
+		frame.getContentPane().add(progressBar_2);
+		
+		JLabel lblWelcomeToOs = new JLabel("Welcome To OS Simulator ");
+		lblWelcomeToOs.setFont(new Font("Arial", Font.ITALIC, 24));
+		lblWelcomeToOs.setForeground(Color.ORANGE);
+		lblWelcomeToOs.setBackground(Color.CYAN);
+		lblWelcomeToOs.setBounds(150, 12, 303, 55);
+		frame.getContentPane().add(lblWelcomeToOs);
+	}
+}

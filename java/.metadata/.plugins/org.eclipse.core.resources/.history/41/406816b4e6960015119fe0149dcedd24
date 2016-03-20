@@ -1,0 +1,53 @@
+import java.util.Arrays;
+public class scan {
+	private int head,total,position[],ans[];
+	scan(int head,int total,int[] position){
+		this.head = head;
+		this.total = total;
+		this.position = new int[total];
+		this.ans = new int[total];
+	}
+	public void makeOrder(){
+		int j=0,min=100000,dir=0,index=0,loc=0;
+		boolean flag = true;
+		Arrays.sort(position);
+		for(int i=0;i<total;i++){
+			if(head>position[i] && (min>Math.abs(head-position[i]))){
+				min = Math.abs(head-position[i]);
+				index = i;
+			}
+		}
+		if(head > position[index])
+			dir = -1;
+		else
+			dir = 1;
+		for(int k=index;true;k+=dir){
+			j++;
+			if((k>=total || k<0) && flag){
+				if(dir == 1){
+					if(index>0){
+						dir = -1;
+						flag = false;
+						k = index;
+					}
+				}
+				else{
+					if(index<total-2){
+						dir = 1;
+						flag = false;
+						k = index;
+					}
+				}
+			}
+			ans[j++] = position[k];
+			else if((k>=total || k<0) && !flag)
+				break;
+		}
+	}
+	public void printOrder(){
+		for(int i=0;i<total;i++){
+			System.out.print(ans[i]);
+		}
+		System.out.print("\n");
+	}
+}

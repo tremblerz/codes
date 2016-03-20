@@ -1,0 +1,10 @@
+import java.util.Scanner;
+
+
+public class Schedule{
+	public static void main(String[] args) {
+		runner r1=new runner();
+		r1.setvalues();
+		sjf ex1 = new sjf();
+	}
+}

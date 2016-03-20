@@ -1,0 +1,13 @@
+import javax.swing.JPanel;
+
+
+public class wer extends JPanel {
+
+	/**
+	 * Create the panel.
+	 */
+	public wer() {
+
+	}
+
+}

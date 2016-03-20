@@ -1,0 +1,66 @@
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import java.awt.BorderLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
+import javax.swing.JSplitPane;
+import javax.swing.JToolBar;
+import javax.swing.BoxLayout;
+import javax.swing.JProgressBar;
+import javax.swing.JList;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
+import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.UIManager;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
+
+import javax.swing.JTextField;
+import javax.swing.JSeparator;
+import javax.swing.JToggleButton;
+import javax.swing.border.Border;
+
+import com.sun.java.swing.plaf.motif.MotifBorders.ToggleButtonBorder;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+
+
+
+public class runner {
+	private JFrame Welcomeframe,ApplicationFrame;
+	private JButton processSimulation;
+	private JCheckBox Cfcfs,Csjfn,Csjfp,Cround;
+	private JToggleButton start;
+	private JTextField numberOfProcess,burstTimeRange;
+	private JProgressBar fcfs,sjfn,sjfp,round;
+	private Boolean running;
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					runner window = new runner();
+					window.Welcomeframe.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	public runner() {
+		initialize();
+	}
+	private void initialize() {
+		Welcomeframe = new JFrame();
+		Welcomeframe.setBounds(0, 0, 1740, 480);
+		Welcomeframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		Welcomeframe.setTitle("Welcome to OS Simulator !")
+	}
+
+}

@@ -1,0 +1,29 @@
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+
+
+public class runner {
+	private JFrame frame;
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					runner window = new runner();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	public runner() {
+		initialize();
+	}
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(0, 0, 1740, 480);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+}
